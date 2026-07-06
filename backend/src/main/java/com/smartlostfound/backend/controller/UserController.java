@@ -4,6 +4,7 @@ import com.smartlostfound.backend.entity.User;
 import com.smartlostfound.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.smartlostfound.backend.dto.UserRegistrationRequest;
 
 @RestController
 @RequestMapping("/api/users")
@@ -13,7 +14,16 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
+    public User registerUser(@RequestBody UserRegistrationRequest request) {
+
+        User user = new User();
+
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        user.setPhone(request.getPhone());
+        user.setRole("USER");
+
         return userService.registerUser(user);
     }
 }
